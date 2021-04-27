@@ -24,6 +24,7 @@ const Header = () => {
         >
           search
         </Link>
+        
         {authToken && (
           <div className="flex">
             <div className="ml1">|</div>

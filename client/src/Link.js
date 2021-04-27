@@ -1,7 +1,9 @@
 import React from 'react';
 import { useMutation, gql } from '@apollo/client';
 import { FEED_QUERY } from './LinkList';
-
+import { AUTH_TOKEN, LINKS_PER_PAGE } from './constants';
+import { timeDifferenceForDate } from './utils';
+import { useHistory } from 'react-router'
 
 const VOTE_MUTATION = gql`
   mutation VoteMutation($linkId: ID!) {
@@ -33,7 +35,7 @@ const Link = (props) => {
     const take = LINKS_PER_PAGE;
     const skip = 0;
     const orderBy = { createdAt: 'desc' };
-
+    const history = useHistory();
 
     const [vote] = useMutation(VOTE_MUTATION, {
         variables: {
