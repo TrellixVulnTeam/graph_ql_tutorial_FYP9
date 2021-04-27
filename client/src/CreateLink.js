@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useMutation, gql } from '@apollo/client';
+import { useHistory } from 'react-router';
+
+
 
 const CREATE_LINK_MUTATION = gql`
   mutation PostMutation(
     $description: String!
     $url: String!
   ) {
-    post(id: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjQsImlhdCI6MTYxOTU1MjIxNH0.R36XzZC8LyebJfsG94aUoFeytXHqJxxV6eeUB_koEgk", description: $description, url: $url) {
+    post(description: $description, url: $url) {
       id
       createdAt
       url
@@ -21,11 +24,14 @@ const CreateLink = () => {
     url: ''
   });
 
+  const history = useHistory();
+
   const [createLink] = useMutation(CREATE_LINK_MUTATION, {
     variables: {
       description: formState.description,
       url: formState.url
-    }
+    },
+    onCompleted: () => history.push('/')
   });
 
   return (
